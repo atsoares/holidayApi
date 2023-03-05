@@ -1,0 +1,28 @@
+version: "3"
+services:
+
+  holiday:
+    build: .
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - shared-net
+
+  mongodb:
+    image: 'mongo'
+    ports:
+      - "27017:27017"
+    container_name: mongodb
+    networks:
+      - shared-net
+
+networks:
+  shared-net:
+    driver: bridge
