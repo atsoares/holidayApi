@@ -53,7 +53,8 @@ public class HolidayControllerTest {
         thenExpectHolidayServiceGetNextHolidaySameDay();
     }
 
-    // GIVENS
+    // Givens
+
     private void givenAValidDate(){
         date = "2022-03-04";
     }
