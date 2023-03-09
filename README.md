@@ -1,5 +1,5 @@
 # holidayApi
-TechInterview BluestonePIM - RestAPI consuming external API to retrieve same holiday happening in the same day in different countries
+TechInterview BluestonePIM - RestAPI consuming external API to retrieve holidays name happening in the same day in different countries
 
 # How to test locally
 - Java 17 / Maven / Your favourite IDE / Git
