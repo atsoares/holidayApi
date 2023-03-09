@@ -12,5 +12,5 @@ TechInterview BluestonePIM - RestAPI consuming external API to retrieve holidays
 http://localhost:8080/swagger-ui.html
 
 # Tests
-HolidayControllerTest.java
-HolidayClientTest.java
+- HolidayControllerTest.java
+- HolidayClientTest.java
