@@ -1,5 +1,6 @@
 # base image
-FROM openjdk:8
+FROM openjdk:17-alpine
+WORKDIR /opt/workdir/
 
 # copy files over
 COPY . .
