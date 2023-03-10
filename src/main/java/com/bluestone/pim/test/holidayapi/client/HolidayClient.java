@@ -1,6 +1,7 @@
 package com.bluestone.pim.test.holidayapi.client;
 
-import com.bluestone.pim.test.holidayapi.model.HolidayNagerResponse;
+import com.bluestone.pim.test.holidayapi.model.HolidayExternalApiResponse;
+import com.bluestone.pim.test.holidayapi.util.PropertiesReader;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
@@ -34,11 +35,6 @@ public class HolidayClient {
     WebClient webClient;
 
     /**
-     * Constant BASE_API_URL to build webClient
-     */
-    private static final String BASE_API_URL = "https://date.nager.at/api/v3/";
-
-    /**
      * Default constructor method to HolidayClient
      *
      * @param builder WebClient.Builder object
@@ -56,7 +52,7 @@ public class HolidayClient {
                                         .resolver(DefaultAddressResolverGroup.INSTANCE)
                         )
                 )
-                .baseUrl(BASE_API_URL)
+                .baseUrl(PropertiesReader.getProperty("BASE_NAGER_API_URL"))
                 .filter(WebClientFilter.logRequest())
                 .filter(WebClientFilter.logResponse())
                 .filter(WebClientFilter.handleError())
@@ -71,7 +67,7 @@ public class HolidayClient {
      * @param code String country code
      * @return Return Mono object
      */
-    public Mono<List<HolidayNagerResponse>> findHolidayByYearAndCountry(String year, String code) {
+    public Mono<List<HolidayExternalApiResponse>> findHolidayByYearAndCountry(String year, String code) {
         log.info("Searching holidays in the year of [{}] for the country [{}]", year, code);
 
         return webClient
@@ -81,7 +77,31 @@ public class HolidayClient {
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError,
                         error -> Mono.error(new RuntimeException("Verify informed parameters")))
-                .bodyToMono(new ParameterizedTypeReference<List<HolidayNagerResponse>>() {});
+                .bodyToMono(new ParameterizedTypeReference<List<HolidayExternalApiResponse>>() {});
+    }
+
+    /**
+     * Method findHolidayByYearAndCountryOTHER_SERVICE not used due to limitations on the external API free plan
+     * Responsible to retrieve data from external API
+     *
+     * @param year String year
+     * @param code String country code
+     * @return Return Mono object
+     */
+    public Mono<List<HolidayExternalApiResponse>> findHolidayByYearAndCountryOTHER_SERVICE(String year, String code) {
+        log.info("Searching holidays in the year of [{}] for the country [{}]", year, code);
+
+        return webClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("api-key", PropertiesReader.getProperty("APP_KEY"))
+                        .queryParam("country", code)
+                        .queryParam("year", year)
+                        .build())
+                .retrieve()
+                .onStatus(HttpStatus::is4xxClientError,
+                        error -> Mono.error(new RuntimeException("Verify informed parameters")))
+                .bodyToMono(new ParameterizedTypeReference<List<HolidayExternalApiResponse>>() {});
     }
 
 }
