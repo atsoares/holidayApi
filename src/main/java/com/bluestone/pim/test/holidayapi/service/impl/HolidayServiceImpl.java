@@ -3,7 +3,7 @@ package com.bluestone.pim.test.holidayapi.service.impl;
 import com.bluestone.pim.test.holidayapi.client.HolidayClient;
 import com.bluestone.pim.test.holidayapi.exception.ResponseException;
 import com.bluestone.pim.test.holidayapi.service.HolidayService;
-import com.bluestone.pim.test.holidayapi.model.HolidayNagerResponse;
+import com.bluestone.pim.test.holidayapi.model.HolidayExternalApiResponse;
 import com.bluestone.pim.test.holidayapi.model.HolidayResponse;
 import com.bluestone.pim.test.holidayapi.util.RequestValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -56,8 +56,8 @@ public class HolidayServiceImpl implements HolidayService {
         LocalDate localDate = LocalDate.parse(date);
         String year = String.valueOf(localDate.getYear());
 
-        Mono<List<HolidayNagerResponse>> listCountry1 = holidayClient.findHolidayByYearAndCountry(year, code1);
-        Mono<List<HolidayNagerResponse>> listCountry2 = holidayClient.findHolidayByYearAndCountry(year, code2);
+        Mono<List<HolidayExternalApiResponse>> listCountry1 = holidayClient.findHolidayByYearAndCountry(year, code1);
+        Mono<List<HolidayExternalApiResponse>> listCountry2 = holidayClient.findHolidayByYearAndCountry(year, code2);
 
         log.info("List object from mono 1[{}]", listCountry1.block());
         log.info("List object from mono 2[{}]", listCountry2.block());
@@ -65,9 +65,9 @@ public class HolidayServiceImpl implements HolidayService {
         Mono<Map<LocalDate, List<String>>> list = Flux.merge(listCountry1,listCountry2)
                 .flatMapIterable(Function.identity())
                 .collect(Collectors.groupingBy(
-                            HolidayNagerResponse::getDate,
+                            HolidayExternalApiResponse::getDate,
                             Collectors.mapping(
-                                    HolidayNagerResponse::getName,
+                                    HolidayExternalApiResponse::getName,
                                     Collectors.toList()
                         )));
 

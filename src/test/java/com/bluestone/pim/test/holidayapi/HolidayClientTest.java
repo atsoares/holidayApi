@@ -1,7 +1,7 @@
 package com.bluestone.pim.test.holidayapi;
 
 import com.bluestone.pim.test.holidayapi.client.HolidayClient;
-import com.bluestone.pim.test.holidayapi.model.HolidayNagerResponse;
+import com.bluestone.pim.test.holidayapi.model.HolidayExternalApiResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -85,14 +85,14 @@ public class HolidayClientTest {
                                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                                         .withBody(jsonString)));
 
-        List<HolidayNagerResponse> holidayNagerResponses =
+        List<HolidayExternalApiResponse> holidayExternalApiResponse =
                 holidayClient.findHolidayByYearAndCountry(year, countryCode).block();
 
         ObjectMapper mapper = JsonMapper.builder()
                 .addModule(new JavaTimeModule())
                 .build();
-        List<HolidayNagerResponse> expectedHoliday = mapper.readValue(jsonString, new TypeReference<List<HolidayNagerResponse>>(){});
+        List<HolidayExternalApiResponse> expectedHoliday = mapper.readValue(jsonString, new TypeReference<List<HolidayExternalApiResponse>>(){});
 
-        assertTrue(holidayNagerResponses.size() == expectedHoliday.size());
+        assertTrue(holidayExternalApiResponse.size() == expectedHoliday.size());
     }
 }

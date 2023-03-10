@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 /**
- * The POJO class HolidayNagerResponse
+ * The POJO class HolidayExternalApiResponse
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class HolidayNagerResponse {
+public class HolidayExternalApiResponse {
 
     private LocalDate date;
     private String localName;
