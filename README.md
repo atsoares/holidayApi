@@ -8,6 +8,8 @@ TechInterview BluestonePIM - RestAPI consuming external API to retrieve holidays
 - 'docker-compose up' in the root directory to start the application
 - Access the API methods with either swagger or postman
 
+- example call in postman: http://localhost:8080/api/holiday?date=2023-03-04&countryCode1=BR&countryCode2=PL
+
 # Swagger
 http://localhost:8080/swagger-ui.html
 
