@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+/**
+ * The POJO class HolidayResponse
+ */
 @Data
 @NoArgsConstructor
 public class HolidayResponse {

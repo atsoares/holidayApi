@@ -19,13 +19,30 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.TEXT_PLAIN;
 
+/**
+ * The class Holiday Client (Custom Web Client)
+ */
 @Service
 @Slf4j
 public class HolidayClient {
 
+    /**
+     * WebClient object to hold injected dependency
+     *
+     * @var webClient
+     */
     WebClient webClient;
+
+    /**
+     * Constant BASE_API_URL to build webClient
+     */
     private static final String BASE_API_URL = "https://date.nager.at/api/v3/";
 
+    /**
+     * Default constructor method to HolidayClient
+     *
+     * @param builder WebClient.Builder object
+     */
     public HolidayClient(WebClient.Builder builder) throws SSLException {
         SslContext sslContext = SslContextBuilder
                 .forClient()
@@ -46,6 +63,14 @@ public class HolidayClient {
                 .build();
     }
 
+    /**
+     * Method findHolidayByYearAndCountry
+     * Responsible to retrieve data from external API
+     *
+     * @param year String year
+     * @param code String country code
+     * @return Return Mono object
+     */
     public Mono<List<HolidayNagerResponse>> findHolidayByYearAndCountry(String year, String code) {
         log.info("Searching holidays in the year of [{}] for the country [{}]", year, code);
 

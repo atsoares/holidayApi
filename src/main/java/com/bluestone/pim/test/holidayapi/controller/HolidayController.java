@@ -16,6 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import static com.bluestone.pim.test.holidayapi.constants.Constants.*;
 
+/**
+ * The controller class HolidayController
+ */
 @RestController
 @RequestMapping(path = "/api",
         produces = "application/json")
@@ -23,9 +26,22 @@ import static com.bluestone.pim.test.holidayapi.constants.Constants.*;
 @Slf4j
 public class HolidayController {
 
+    /**
+     * Variable to hold injected dependency
+     *
+     * @var holidayService
+     */
     @Autowired
-    private HolidayService service;
+    private HolidayService holidayService;
 
+    /**
+     * Method getNextHolidaySameDay endpoint (/holiday)
+     *
+     * @param date String date format (yyyy-mm-dd)
+     * @param countryCode1 String country Code 1 ISO format
+     * @param countryCode2 String country Code 2 ISO format
+     * @return ResponseEntity<HolidayResponse> object
+     */
     @ApiResponses(
             value = {
                     @ApiResponse(code = 200, message = STATUS_200_GET_OK, response = HolidayResponse.class),
@@ -42,7 +58,7 @@ public class HolidayController {
                 date, countryCode1, countryCode2);
 
         try {
-            return new ResponseEntity<>(service.getNextHolidaySameDay(date, countryCode1, countryCode2), HttpStatus.OK);
+            return new ResponseEntity<>(holidayService.getNextHolidaySameDay(date, countryCode1, countryCode2), HttpStatus.OK);
         }
         catch (ResponseException exc) {
             log.error("Exception catch: Status [{}]; Message[{}]", exc.getStatusCode(), exc.getMessage());

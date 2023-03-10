@@ -21,13 +21,29 @@ import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * The service class HolidayServiceImpl
+ */
 @Service
 @Slf4j
 public class HolidayServiceImpl implements HolidayService {
 
+    /**
+     * Variable to hold injected dependency
+     *
+     * @var holidayClient
+     */
     @Autowired
     HolidayClient holidayClient;
 
+    /**
+     * Method getNextHolidaySameDay.
+     *
+     * @param date String date to search.
+     * @param code1 String country code1.
+     * @param code2 String country code2.
+     * @return Return HolidayResponse object
+     */
     @Override
     public HolidayResponse getNextHolidaySameDay(String date, String code1, String code2) throws ResponseException{
 
